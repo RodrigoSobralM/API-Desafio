@@ -4,7 +4,7 @@ const EsquemaLivros = require("../models/livro");
 const tratarErrosEsperados = require("../functions/tratarErros");
 const router = express.Router();
 
-router.post("/cadastrar", conectarBancoDados, async function (req, res) {
+router.post("/livros", conectarBancoDados, async function (req, res) {
   try {
     // # swagger.tags = ['Livros']
     let { id, titulo, num_paginas, isbn, editora } = req.body;
@@ -29,11 +29,11 @@ router.post("/cadastrar", conectarBancoDados, async function (req, res) {
   }
 });
 
-router.put("/editar/:id", conectarBancoDados, async function (req, res) {
+router.put("/livros/:id", conectarBancoDados, async function (req, res) {
   try {
     var idLivro = req.params.id;
     let { titulo, num_paginas, isbn, editora } = req.body;
-    console.log(req.body)
+    
     const checkLivro = await EsquemaLivros.findOne({ id: idLivro });
     if (!checkLivro) {
       throw new Error("Livro não encontrado ou não existe");
@@ -57,7 +57,7 @@ router.put("/editar/:id", conectarBancoDados, async function (req, res) {
   }
 });
 
-router.get("/buscar", conectarBancoDados, async function (req, res) {
+router.get("/livros", conectarBancoDados, async function (req, res) {
   try {
     const buscarLivro = await EsquemaLivros.find();
 
@@ -69,7 +69,7 @@ router.get("/buscar", conectarBancoDados, async function (req, res) {
   }
 });
 
-router.get("/buscar/:id", conectarBancoDados, async function (req, res) {
+router.get("/livros/:id", conectarBancoDados, async function (req, res) {
   try {
     var idLivroBuscar = req.params.id;
     const livroRetornado = await EsquemaLivros.findOne({ id: idLivroBuscar });
@@ -84,7 +84,7 @@ router.get("/buscar/:id", conectarBancoDados, async function (req, res) {
   }
 });
 
-router.delete("/deletar/:id", conectarBancoDados, async function (req, res) {
+router.delete("/livros/:id", conectarBancoDados, async function (req, res) {
   try {
     var idLivro = req.params.id;
     const deletarLivro = await EsquemaLivros.deleteOne({ id: idLivro });
