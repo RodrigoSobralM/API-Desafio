@@ -23,8 +23,9 @@ router.post("/livros", conectarBancoDados, async function (req, res) {
       resposta: criarLivro,
     });
   } catch (error) {
-    console.log(req.body);
-    console.log(error);
+    if (String(error).includes('id_1 dup key')){ 
+        return tratarErrosEsperados(res, 'Error: Ja existe um livro com esse id')
+    }
     return tratarErrosEsperados(res, error);
   }
 });
